@@ -14,10 +14,10 @@ def obtener_autorizacion():
     try:
             indice = int(input("Por favor ingrese el número de persona que autoriza: "))
             if indice not in ids:
-                print("❌ El valor ingresado no corresponde a ningún autorizado para crear usuarios.")
+                print("El valor ingresado no corresponde a ningún autorizado para crear usuarios.")
                 return None
             else:
-                print("✅ Autorización válida.")
+                print("Autorización válida.")
                 return indice
     except ValueError:
         print("⚠️ Entrada inválida. Por favor ingrese un número entero.")
