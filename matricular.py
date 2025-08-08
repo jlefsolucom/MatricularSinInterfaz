@@ -2,16 +2,31 @@ from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
 from MatriculadorDAO.Consulta import obtener_datos, insertar_tarjeta
 
-autorizantes = obtener_datos()
+def obtener_autorizacion():
+    autorizantes = obtener_datos()
 
-ids = [fila[0] for fila in autorizantes]
-nombre_usuarios =[fila[1]for fila in autorizantes]
+    ids = [fila[0] for fila in autorizantes]
+    nombre_usuarios =[fila[1]for fila in autorizantes]
 
-for ids,autoriza in zip(ids,nombre_usuarios):
-    print(f"Numero {ids} persona: {autoriza}")
+    for id_persona,autoriza in zip(ids,nombre_usuarios):
+        print(f"Numero {id_persona} persona: {autoriza}")
 
-indice = int(input("Por favor ingrese el numero de persona que autoriza: "))
-Padron = indice
+    try:
+            indice = int(input("Por favor ingrese el número de persona que autoriza: "))
+            if indice not in ids:
+                print("❌ El valor ingresado no corresponde a ningún autorizado para crear usuarios.")
+                return None
+            else:
+                print("✅ Autorización válida.")
+                return indice
+    except ValueError:
+        print("⚠️ Entrada inválida. Por favor ingrese un número entero.")
+        return None
+    
+Padron = obtener_autorizacion()
+
+if Padron is not None:
+    print(f"ID autorizado: {Padron}")
 
 
 descripcion = input("Descripcion de la persona: ")
